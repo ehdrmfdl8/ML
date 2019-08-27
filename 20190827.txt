@@ -1,0 +1,57 @@
+2019. 8.27
+
+ * Keras는 Tensorflow와 99.9% 호환된다.
+ * Keras는 전체 기계학습 tool 분야의 25% 정도를 차지하고 있다.
+ * 사람이 정하는 parameter를 하이퍼파라메터(Hyper parameter)라고 한다.
+
+
+Tensorflow 만들기
+	1. Sequential 만들기
+	2. compile
+		loss function, optimzer function, matrix function 
+
+* python에서 뮤터블 datatype
+	뮤터블 : 대입을 할 때, 그 내부 값은 복사되지 않는 data type
+	종류: 리스트, set, dictionary
+	예)
+                a = [1,2,3]
+                b = a
+                b[0] = 'b'
+                print( a )   #  ['b',2,3]
+
+
+ serialize에 맞는 1차원 data 변환 방법 : Flatten, ravel
+	Flatten : deep copy
+	ravel : 스왈로우 copy(?)
+
+ * 현실 세계의 대부분 data는 0이고, 이는 압축해서 적용할 수 있다.  =>  sparse_categorical_crosserntropy
+
+ * MLP는 data가 많을 수록, layer가 많을 수록, 반복학습을 많이 할 수록 대체로 성능이 좋아진다.
+
+ * Tensorflow 2.0에서부터 dataset을 지원함.  =>  그런데 dataset은 규격이 매우 까다로움
+
+ * big data는 홀드아웃 방식으로 분류한다. 
+	 * 홀드아웃 방식 2종류
+		2way : train, test
+		3way : train, test, validation (validation : 하이퍼파라메터를 찾기 위함)
+	
+ * tensorflow hub : 다른 사람들이 만들어놓은 model들이 많이 있음.  =>  문제점: 버전 호환이 안 됨
+ * Tensorflow 2.0 부터는 정형data도 다룬다 => pandas 사용  =>  쉽지 않음
+
+ * keras로 model 만드는 주요 3가지 방법
+	?
+	add
+	?
+
+ * layer.Dense(64, activation='relu')(x)와 같이 ()() 를 쓰는 기법 : functional 기법 (?)
+    =>  판다스 데이터프레임으로부터 tf.data 데이터셋을 만드는 것이 매우 복잡함
+
+ * 질문
+  - 홀드아웃의 3way 방식의 validation 역할은?
+    =>  하이퍼파라메터를 찾기 위함.  이를 위해 4way 방식을 사용할 수도 있음.
+
+  - iterator 기법으로 big data의 memory 문제를 대응하는데...
+    어쨌든 data를 분석하기 위해서는 일단 loading을 하며, loading 하는 순간 memory 문제가 발생하지 않는가?
+    =>  iterator를 사용하면 file을 open 하는 것도 모두 memory에 올리는 것이 아님.  
+
+

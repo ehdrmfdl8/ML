@@ -1,0 +1,10 @@
+2019. 7.30
+
+인공지능 로봇
+	키스넷
+	소피아
+
+학습의 순서 : instance -> fit -> predict
+
+독립변수1, 종속변수1 : LogisticRegression
+독립변수2, 종속변수2 : SVM

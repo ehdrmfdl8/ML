@@ -1,0 +1,96 @@
+2019. 8.20
+
+data를 읽어와서 분석하기
+	1. 불러오기 (option이 굉장이 많음.  특히 encoding 유의)
+	2. data 정보 확인
+	3. data 전처리
+	
+1. 불러오기
+- Pandas data loading
+  data=pd.read_csv( ...url... , engine='python', header=3, encoding='utf-8')
+	encoding='utf-8'
+	encoding='cp949'		# windows에서 만든 data
+
+	header : data set의 몇 번째 행을 header로 설정할 것인가, default 0
+
+2. data 정보 확인
+  info(), describe()
+	info 용도 
+		- '차원의 저주' 가능성 확인
+		  '차원이 많으면 data를 풍부하게 이해할 수는 있지만, data가 부족하면 오히려 이해할 수 없게 된다.'
+		- missing data check
+		- data type check (분석을 위해 숫자 data로 변환 필요)
+ 		  (길이가 n이면 넓이는 n의 제곱배, 부피는 n의 세제곱배가 된다.
+		   이렇듯 차원이 하나 늘어나면 data는 제곱배가 필요하다)
+		- memory check (pandas는 모든 data를 memory에 올려서 사용함)
+	describe
+		용도 : 평균(mean)과 표준편차(std)를 확인 가능함
+		목적: 모델이 잘 만들어질 수 있는지 예측하기 위함
+
+3. data 전처리 : data를 분석가능한 상태로 변환하는 과정
+	1. missing data (결측치) 를 없애거나 채워줘야 함
+  	    * missing data 없애는 방법
+		1. missing data column 또는 row를 없앰  =>  data는 소중하다.  꼭 없애야 할까...
+		2. missing data에 특정값을 채움  =>  채우는 기법이 중요함
+			* pandas는 Imputer 등 예측기법을 사용함 
+				 * svm과 RandomForest 는 missing data를 예측해서 채우는 성능이 좋다.
+				   Basic imputation using RandomForest, KNN, or PCA(차원축소)
+				=> predictive_imputer 권장    예)  import predictive_imputer
+			* scikit에서는 평균값, 대표값 등을 사용함
+
+	2. 문자열을 모두 숫자로 바꿈  (=incoding)
+	    * 전처리(incoding) 방법 : label 인코딩, one-hot 인코딩
+
+
+
+data 전처리 순서
+	data 제대로 loading 하기  (생각보다 어려움)
+	info() 와 describe() 로 전처리할 요소 파악하기
+
+	# 숫자data의 요약 정보를 표시
+	describe()
+
+	# info 내용 중에서 datatype이 category인 data의 요약 정보를 표시
+	describe(include='category')
+
+	# 모든 요약 정보를 표시
+	describe(include='all')
+
+	# include를 list로서 사용
+	describe(include=['category', 'int64'])
+
+* pandas는 x축이 index이다.
+  예) tips.groupby('sex').mean()['tip'].plot.bar()
+
+  * index 변경하기
+   	set_index		예) tips.set_index('day') 
+
+
+* data 열 추출하기
+    1. 팬시 indexing   예) tips[['tip','sex','total_bill']]
+    2. iloc[:, :]		예) tips.iloc[:, 0:3]
+    3. attribute 	   예) tips.tip    * 주의: method를 먼저 불러옴.
+    4. 고급 팬시 indexing   tips[tips.columns[:-1]]    * 실무에서 주로 사용함
+    5. dictionary 
+
+* data 행(세로줄, columns) label 목록 얻기
+    columns 사용 		예)  tips.columns
+
+* data가 기계학습 가능한지 여부 판단하기
+	data가 많을 때는 홀드아웃(hold-out) 방식(data를 쪼개서 학습용, 확인용으로 나눔)을 사용
+	data가 적을 때는 cross-validation 방식을 사용 (data를 일정 그룹으로 균등 분할 후 그룹 중 하나씩을 test용도로 사용하며 학습시키는 방법)
+
+	x: 학습인자 : dimension, pitcher, attribute
+	y: 결과인자(?) : label, target, class
+
+	* * 기계학습에는 문자열을 분석할 수 없다.  하지만, 일부 y 값은 문자열을 허용한다.
+
+* mutable datatype(자기 자신이 바뀔 수 있는 datatype)은 3가지 method를 가지고 있음
+	append
+	insert
+	pop  :  맨 마지막 값을 되돌리면서 자기 자신을 변화시킴.
+
+* 기계학습의 중요도 순서
+	1순위 : data
+	2순위 : H/W  (사업용 최소단위: 쿠다 (2048 300만원, 1024 100만원대) 3개(?))
+	3순위 : algorithm

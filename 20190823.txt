@@ -1,0 +1,42 @@
+2019. 8.23
+
+ * data shift : 홀드아웃(hold-out) 방식을 사용할 때, target(결과값)의 종류가 편중되는 현상
+   =>  해결방법 : train_test_split() 의 option으로 stratify(랜덤값이 골고루 담기게 함)을 사용함
+
+ * python의 map()  : map은 function을 return값으로 돌려줌
+	signature : map( self, /, *args, **kwargs )
+		/ : 위치 바꾸는 것을 허용하지 않음
+
+	예)  list(map(lambda x:x+1, [2,3,4,5]))   #  list [2,3,4,5] 의 각 요소에 1을 더한 list를 되돌림
+
+    - map과 친구들 : map, filter, reduce
+	filter : 참거짓에 따라 걸러줌
+	reduce : data를 줄여줌
+		예)  from functools import reduce
+		      reduce(lambda x, y:x+y, [1,2,3,4,5,6,7])
+
+ * pandas의 map()
+	map, applymap, apply
+
+	* pandas의 map은 앞쪽의 series 값을 인자로 가져와 사용함
+	* map은 pandas의 전처리에서 매우 중요함!
+	* appay도 개념이 어렵지만, 매우 강력하기에 꼭 사용법을 알아둬야 함 (끝판왕?)
+
+
+ * python의 and or 문법
+	A and B : A가 True이면 B를 return 함
+	A and B : A가 False이면 A를 return 함
+
+	A or B : A가 True이면 A를 return 함
+	A or B : A가 False이면 B를 return 함
+
+	* 0, [], {}, None 은 모두 비교연산에서 False를 return 함
+
+ * pradicate 함수의 뜻 : 참과 거짓을 판별해서 반환하는 함수
+	예)  list(filter(lambda x:x>5, [2,3,4,5,6,7]))
+
+
+
+
+
+ 

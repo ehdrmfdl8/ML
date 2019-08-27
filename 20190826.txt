@@ -1,0 +1,100 @@
+2019. 8.26
+
+기계학습 개념
+ * 기계의 연산 : AND, OR, XOR로 구성
+ : 퍼셉트론의 개념으로 AND와 OR를 표현하여 문제를 해결.  
+   => 하지만, XOR는 구현이 안 됨.   =>  인공지능의 암흑기
+   => MLP(Multi-Layer Perceptron)으로 이를 해결함.
+	ANN(Artificial Neural Networks) = MLP
+
+ * Layer가 많을 수록 예측 성능이 좋아진다.  하지만, 너무 많은 layer는 속도가 느려지고(overfitting), 학습이 안 되는 문제(그래디언트 베니싱 문제)가 발생한다.
+   (MLP에서 layer가 많은 것을 'deep' 이라고 함)
+
+ * 왜 deep learning인가?
+	1. 쉬워서 (few feature engineering) : 특히 비정형data에서 성능이 좋음.  정형data는 전통적인 기계학습이 더 성능이 좋음.
+		* 비정형data 대표 : 이미지, 음성, 자연어
+		* 비정형data는 numpy로 처리한다.  (pandas는 정형data 처리에 적합함)
+		* Kaggle은 대부분 정형data를 다루기 때문에 전통적인 기계학습이 훨씬 성능이 좋음.
+	2. 성능이 좋아서
+
+	* 많은 양의 비정형data는 deep learning이 전통 기계학습에 비해 훨씬 성능이 좋다.
+ 	  하지만, 적은 양의 비정형data에 대해서는 전통 기계학습의 성능이 더 좋을 수도 있다.
+	  => data의 양에 따른 성능의 변화를 분석하여 이를 판단.
+
+ * data의 양에 따른 성능의 변화 : learning curve
+	성능의 변화를 시각적으로 살펴보자! : sklearn_evaluation
+		(주피터에서) 설치 : !pip install sklearn-evaluation
+	
+ * deep learning 적용 때 가장 유의사항 !  : overfitting!
+
+ * python으로 기계학습을 한다면 scikit이 으뜸
+ * 딥러닝을 한다면, 구글의 텐서플로우와 캐라스, MS의 CNTK
+	상용화 : 텐서플로우 권장 (유일하게 임베디드 가능함)
+
+ * 텐서플로우 공식 site 추천 서적 : 캐라스 창시자에게 배우는 딥러닝
+ * 텐서플로우 시뮬레이션 : playground
+    https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.89753&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false
+ * 텐서플로우 2.0 이미지학습 가이드 ( https://www.tensorflow.org/beta/tutorials/keras/basic_classification )
+
+ * 텐서플로우 2.0 RC released ( https://www.tensorflow.org/beta/ )
+	1.X 버전에서 40% 정도 변화함.
+	(주피터) 설치 
+		!pip install tensorflow 
+		!pip install tensorflow-gpu  : gpu 지원 버전
+			* 노트북에서는 99.9% gpu 지원 안 됨
+		!pip install tensorflow-gpu==2.99  
+			숫자는 적당히 임의값 넣어본 것.  그러면 오류 발생하면서 설치 가능한 버전 목록이 표시됨.
+	* 성능 좋은 GPU 권장 (2070 이상.  약 2~300만원 정도)
+
+ * 구글코랩 
+	구글에서 제공하는 주피터노트북.  GPU를 지원해서 왠만한 PC보다 성능이 좋음.
+	단, session 개념이어서 동작 중에 session이 끊어지면 중단됨.
+
+ * 주피터노트북의 % 용도 : 주피터노트북에서만 제공하는 magic function
+	%lsmagic : 지원하는 magic function 목록을 표시해 줌
+
+ * 주피터노트북은 사실상 python 표준이다.
+  => 주피터노트북 file을 수정 없이 구글 Colab, 애저 등에 올리면 자동으로 동작한다.
+
+ * 개발 용도로는 pycharm 이 거의 표준이다. (상용)
+ * 무료 개발 용도는 Rodeo를 권장함 (spyder는 불안정함)
+
+ * version 테크닉
+	- wartermark
+
+ * source code 보기
+ 	import inspect
+	print(inspect. 
+
+ * 정형data는 pandas를 사용하며, data를 파악하기 위해 info(), describe()를 사용함
+   비정형data는 data를 파악하기 위해 shape와 dtype를 사용함
+	* numpy의 중요한 명령어 : shape, dtype
+
+
+ * image 학습시키기
+	1. image 크기와 색상을 맞춰줘야 함
+
+	2. image 불러오기
+
+            3. image data 정보 파악하기
+            	import tensorflow as tf
+	            from tensorflow import keras   # tensorflow용 keras를 불러옴
+	            fashion_mnist = keras.datasets.fashion_mnist
+	            (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
+
+	4. MLP 설정하기 : feature를 몇 개 둘 것인가, layer를 몇개 둘 것인가?
+		순차방식 : Sequential
+	
+	5. 모델 구성 (Sequential()에 적용할 model 만들기.  이를 통해 layer를 쌓음)
+		fully-connected : layer와 layer 사이가 촘촘하게 완전 연결된 상태
+
+		* input-layer는 1차원으로 만들어줘야 함
+		  (numpy의 Flatten과 reshape을 활용함)
+		* reshape는 원본을 바꿔버리기에 잘 사용하지 않는다.
+
+	6. 학습 전략 (compile) 설정하기 (model을 통해 학습시키는 방법)
+		loss function, optimzer function, matrix function
+
+	7. 학습하기 (fit or train(?))
+		반복 훈련 (epoch)
+

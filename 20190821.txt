@@ -1,0 +1,77 @@
+2019. 8.21
+
+ * '일반화된 성능(한 번도 본적이 없는 data에 대한 성능)'이 좋아야 한다.
+
+
+ * 인공지능(기계학습)을 배우기 위해 알아야 할 필수요소
+ 	- 인공지능(기계학습)의 모든 기초는 Numpy로부터 출발한다.
+ 	- 인공지능(기계학습)의 거의 모든 내용은 공식문서에 나와 있다.
+
+ * signature의 의미
+	['file', "mode='r'", 'buffering=-1' ... ]
+	'file' : file 형태임.  경로, 파일명, 확장자의 3가지 요소가 한쌍으로 적용됨
+	"mode='r'" :  file 가져올 때의 mode.  읽기, 쓰기, 추가하기(add)
+
+ - file 관리
+  - open : 작은 file(txt, csv 등)을 가져옴.   대부분의 파일은 numpy.read_... method로 가져옴.
+  - pickle : 객체를 직렬화(serialize) 함 (중요!)
+	pickle.dump : file을 저장함
+	pickle.load : file을 직렬화하여 객체 상태로 읽어옴
+
+ => 인공지능(기계학습)의 기초는 Numpy이다보니 file도 Numpy로 다루는 것이 가장 효율적이다.
+     Pandas는 Numpy를 상속받아 확장한 개념이다.
+	open()  
+		->  numpy.loadtxt()  ->  numpy.genfromtxt()  =>  비정형data를 가져올 때 사용함.
+		->  pandas.read_...   => 정형data를 가져올 때 사용함.  (현재까지의 끝판왕)
+	
+	* open()으로 가져올 수 없는 binary file은 scipy.io로 가져온다.
+
+ * file을 어떤 식으로 다루든, 읽기/쓰기에는 직렬화를 위해 pickle을 사용한다.  (중요!)
+ 
+ * 기계학습 종류 : 지도학습, 비지도학습, 레인포스(?)학습
+	지도학습 : 정답을 같이 알려주는 학습 (알고리즘 + data 모델)
+	비지도학습 : 정답을 알려주지 않는 학습
+	강화학습 
+
+ * 딥러닝의 아버지 (어머니는?)
+ 제프리 힌튼
+ 얀 르쿤 Y.LeCun
+ 조슈아 벤지오
+ 이안 구펠로
+ 엔드류 눙(?)
+ 피터노빅 (구글 수장.  전 세계 60%가 공부에 참고하는 책 저서.  한글판은 오역 심함)
+
+ * 기계학습의 목표 : Data로부터 Specific 문제 해결을 위한 최적의 모델 만들기
+	(최적: 빨리 학습시키고, 정확히 예측하는 것)
+
+ * 기계학습에서 차원(dimension = X)가 많을 수록 data는 비례해서 많아야 한다.
+   => '차원의 저주' 조심 (underfitting or overfitting)
+
+ * 기계학습의 80%는 전처리(incoding)에 있다. (논문에 있다고 함)
+   pandas 전처리의 대부분은 map으로 한다.
+
+ * 기계학습의 처리는 반드시 사람의 능력(domain, math, coding, AI 등)이 더해져야 한다. 
+   (그런데, 모든 분야를 섭렵할 수 있는 사람이 있을까? (유니콘 이론))
+
+ * 기계학습의 근본 이론 
+	- No Free Lunch : 뭔가를 얻으려면, 뭔가를 포기해야 한다.
+	   => 반대 되는 주장 : The master Algorithm (일반인을 대상으로 하는 책, 권장 서적)
+
+	- Occam's Razor : 같은 성능을 낸다면, 단순한 것이 좋다.
+
+ * data모델을 잘 만들어질지 판별 방법 (pandas 기준)
+    - describe 사용 (data가 대표성을 띄는지 여부 확인)
+	- '큰 수의 법칙', '중심 극한의 법칙'에 따라 data가 정규분포를 띄는지 살펴봄
+	   방법 : data loading 한 후 describe 를 실행해 평균(mean)과 표준편차(std) 등을 살펴봄
+
+	- seaborn.boxplot()  : 그래프를 통해 data의 영향력 확인
+		- outlier는 기계학습의 성능을 떨어뜨리는 원인(? 노이즈로 간주?)
+		  (또는 반대로 결정적 요인이 될 수도 있지 않을까?   <= 통찰에 의존)
+	- seaborn.heatmap() : data의 상관관계를 색상으로 확인
+	- pandas.corr() : 상관관계 확인
+
+ * data모델에 맞는 적합한 알고리즘 찾기 (No Free Lunch)
+	sklearn.model_selection.train_test_split : 알고리즘마다의 학습의 성능 예측치 정확도를 비교
+
+
+ * 다중공선성 : 상관관계가 높은 관계.  상관관계가 높은 독립변수들로 구성된 data는 좋지 않음.

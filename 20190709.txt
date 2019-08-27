@@ -1,0 +1,9 @@
+
+def sum_ref(**args)
+ : **(asterisk)가 두 번 붙으면 argument와 가변형 parameter 두 가지를 모두 적용한 문법임
+
+
+제너레이터 학습
+
+데코레이션 학습
+

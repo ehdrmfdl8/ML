@@ -1,0 +1,5 @@
+2019. 8. 7
+	환경설정 파일 생성
+	jupyter notebook --generatr-config   =>  jupyter 설정 폴더에 jupyter_notebook_config 파일 생성됨
+
+	data 대회 :  캐글 (https://www.kaggle.com)
